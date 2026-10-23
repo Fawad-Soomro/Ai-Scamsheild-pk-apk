@@ -1,0 +1,730 @@
+# MASTER PROMPT — AI SCAMSHIELD PK
+## Existing Android App Enhancement, AI Features & Final UI/UX Polish
+
+Act as a senior Android developer, Kotlin and Jetpack Compose specialist, AI integration engineer, cybersecurity product designer, and software quality-assurance engineer.
+
+Your task is to **enhance my existing AI ScamShield PK Android application**, not create a new application from scratch.
+
+Implement the requested features directly in the existing project, preserve its working functionality, improve the user experience, and verify the final build. Work with the actual repository and its existing architecture rather than making assumptions about files, dependencies, or implementation details.
+
+---
+
+# 1. PROJECT OVERVIEW
+
+**App name:** AI ScamShield PK  
+**Developer attribution:** Developed by Team Trident AI  
+**Platform:** Android  
+**Existing technology:** Kotlin, Jetpack Compose, and the project's current Android architecture  
+**AI provider:** Gemini for AI-powered features  
+**Local storage:** Existing Room database, where implemented  
+**Primary users:** General users in Pakistan who need help identifying suspicious messages, URLs, screenshots, and possible scams.
+
+The application should feel like a polished, trustworthy cybersecurity product suitable for ordinary users, not merely a university assignment or academic demonstration.
+
+Its main purpose is to help users understand suspicious content, assess potential threats, recognize common scam tactics, and make safer decisions.
+
+The interface must be professional, accessible, understandable to beginners, and usable by people who are not cybersecurity experts.
+
+## Important implementation rule
+
+Before modifying anything, inspect the actual project structure, existing source files, Gradle configuration, navigation, view models, repositories, Room entities and DAOs, Gemini integration, and current UI.
+
+The project may already contain components such as:
+
+- HomeScreen.kt
+- ScannerScreen.kt
+- ResultScreen.kt
+- HistoryScreen.kt
+- InsightsScreen.kt
+- SettingsScreen.kt
+- DemoModeScreen.kt
+- FaqScreen.kt
+- VivaQnAScreen.kt
+- MainActivity.kt
+- ScamShieldViewModel.kt
+- UrlRiskAnalyzer.kt
+- TextPreprocessor.kt
+- GeminiApiService.kt
+- TtsManager.kt
+- SoundEffectManager.kt
+- AppDatabase.kt
+
+These are examples from the existing project's reported structure. Verify which files actually exist, identify their responsibilities, and adapt your implementation accordingly.
+
+Do not assume that all files are present or that their current implementations match this description.
+
+---
+
+# 2. NON-NEGOTIABLE RULES
+
+1. Modify the existing application. Do not generate a separate app or replace the project with a generic template.
+2. Preserve working functionality, navigation, existing screen flows, dependencies, and current architectural patterns wherever practical.
+3. Do not delete existing features simply to make implementation easier.
+4. Do not rewrite large portions of the project if a targeted change is sufficient.
+5. Reuse existing screens, view models, repositories, services, and database structures where appropriate.
+6. Avoid creating duplicate screens, duplicate services, duplicate database entities, or multiple competing implementations of the same feature.
+7. Do not add unnecessary dependencies or request unnecessary Android permissions.
+8. Do not hard-code API keys, credentials, or other secrets in source code.
+9. Never claim that a feature works, a test passed, or the application builds successfully unless you actually verified it.
+10. If a requested feature is partly unsupported by the current architecture, implement the most reliable practical version and clearly explain the limitation.
+11. Do not stop after providing recommendations or sample code. Inspect, implement, integrate, test, and refine the existing project.
+12. Prefer small, coherent implementation stages with verification after each major stage.
+13. If something already works correctly, preserve it instead of rebuilding it unnecessarily.
+
+**Priority:** correctness, security, stability, preservation of existing functionality, user experience, and then visual polish.
+
+---
+
+# 3. FEATURE REQUIREMENTS
+
+Cover all six feature areas below. Integrate them into the existing navigation and screens naturally. Do not create six disconnected tools simply to satisfy the checklist.
+
+## FEATURE 1 — AI SCAM ASSISTANT
+
+Implement an AI Scam Assistant using the existing Gemini service and architecture.
+
+The assistant should help users understand a scan result and ask relevant follow-up questions in straightforward language.
+
+### Required capabilities
+
+- Explain why a specific message, URL, or screenshot was assessed as suspicious or relatively safe.
+- Explain technical terms in beginner-friendly language.
+- Describe possible scam tactics, such as impersonation, urgency, suspicious payment requests, credential theft, fake delivery notifications, and phishing.
+- Explain what the user should do next.
+- Answer questions about the current scan and its evidence.
+- Provide practical recommendations relevant to users in Pakistan when supported by reliable information.
+- Support English, Urdu script, and Roman Urdu explanations.
+- Use the currently selected scan result as context rather than responding with unrelated generic advice.
+
+### UI expectations
+
+Integrate the assistant into the existing result screen, an existing assistant screen, or another appropriate location in the current navigation.
+
+A user should be able to ask questions such as:
+
+- "Why was this message flagged?"
+- "What should I do now?"
+- "How could this scam work?"
+- "Explain this in simple Urdu."
+- "What information should I avoid sharing?"
+
+Use a clean chat or question-and-answer interface. Provide useful suggested questions when appropriate, without overcrowding the screen.
+
+### Accuracy and safety
+
+The assistant must use the actual scan result, evidence, risk score, and available analysis as context.
+
+It must not invent indicators, claim to have detected something that was not detected, or change the detector's result merely because the user asks a leading question.
+
+Clearly distinguish between:
+
+- The detector's assessment.
+- Evidence found in the submitted content.
+- The AI assistant's explanation or interpretation.
+- Things that remain uncertain.
+
+A safe-looking scan is not proof that content is harmless. A suspicious indicator is not automatically proof of criminal intent.
+
+Never ask users to provide passwords, OTPs, PINs, authentication tokens, or banking credentials.
+
+If Gemini is unavailable, show a helpful fallback using available scan evidence and predefined safety guidance. Do not pretend the fallback is a live AI response.
+
+---
+
+## FEATURE 2 — MULTILINGUAL EXPLANATIONS
+
+Improve language accessibility throughout the scanning and result experience.
+
+Support:
+
+1. English
+2. Urdu script
+3. Roman Urdu
+
+English should remain the default language unless the user changes it in settings or chooses another language for a specific explanation.
+
+### Implementation requirements
+
+- Allow the user to request a translation or simplified explanation of the current result.
+- Explain risk levels, detected indicators, reasons for flagging, recommended actions, and scam tactics in the selected language.
+- Keep cybersecurity terminology accurate while explaining unfamiliar concepts in simple words.
+- Preserve numbers, URLs, scores, dates, and other technical evidence accurately during translation.
+- Keep Urdu text readable and handle right-to-left layout where practical.
+- Make Roman Urdu natural and understandable rather than simply replacing individual English words mechanically.
+- Avoid changing the meaning or severity of a risk assessment during translation.
+- Reuse the existing Gemini service instead of creating an unnecessary new integration.
+
+The translated explanation must remain based on the actual scan evidence. It must not introduce new reasons or technical findings.
+
+Handle generation failures, empty responses, network problems, language-unavailable errors, and API limits gracefully.
+
+Where appropriate, retain a previously generated explanation locally so it does not need to be generated again unnecessarily.
+
+Do not translate every screen into Urdu automatically. Preserve the existing interface language behavior and keep language selection predictable.
+
+---
+
+## FEATURE 3 — PERSONAL SCAM INSIGHTS
+
+Turn the existing Insights functionality into a useful, privacy-conscious personal security dashboard.
+
+Use the real scan records already stored in the app's Room database. Inspect the existing entities, DAOs, and repository methods before designing any new data structure.
+
+### Useful insights
+
+Where the required data exists, display:
+
+- Total number of scans.
+- Number of safe-looking, suspicious, high-risk, or critical results.
+- Distribution of risk levels.
+- Distribution of detected scam categories.
+- Changes in the user's scan activity over time.
+- Common indicators found in the user's scanned content.
+- Recent scanning activity.
+- Short, practical personal safety suggestions based on the user's actual scan history.
+
+Use visually clear summary cards, compact charts or progress indicators, and readable labels.
+
+Avoid excessive animations, large decorative charts, or meaningless statistics.
+
+### Accuracy and data rules
+
+- Calculate statistics from real local scan records.
+- Respect the exact meaning of the existing risk categories and severity thresholds.
+- Do not manufacture historical data or display example values as if they belonged to the user.
+- Do not claim nationwide scam trends from an individual's scan history.
+- Do not describe repeated detections as proof that the user has been targeted by the same criminal group.
+- Clearly distinguish personal scan history from any external statistics.
+- Handle an empty history with a helpful empty state.
+- Handle missing fields and older database records safely.
+- Make sure adding insight calculations does not break existing history or database operations.
+
+Insights should primarily be computed locally. Do not upload the user's scan history to Gemini just to calculate ordinary statistics.
+
+When clearing history, follow the existing app's intended behavior and clearly explain any destructive action before it is confirmed.
+
+---
+
+## FEATURE 4 — INTERACTIVE SCAM AWARENESS TRAINER
+
+Improve the existing demo or practice functionality and make it useful to normal users.
+
+Do not present it as an academic demo or advertise the app as a university project.
+
+Use an appropriate existing screen and navigation route. Where suitable, rename user-facing references to **Scam Awareness Trainer** or **Practice Scenarios**.
+
+### Required functionality
+
+- Reuse the existing Pakistani scam scenarios wherever possible.
+- Include realistic examples involving suspicious SMS messages, fake delivery alerts, impersonation, fraudulent payment requests, phishing links, and social engineering.
+- Present a sample message or scenario to the user.
+- Let the user decide whether it appears safe, suspicious, or high-risk, according to the scenario design.
+- Explain the correct answer after the user's selection.
+- Highlight the warning signs and explain why they matter.
+- Provide a final score or progress summary.
+- Offer a way to try another scenario.
+- Store progress locally only if it fits the current architecture and can be implemented reliably.
+
+Keep scenarios clearly labelled as simulated examples, not live detections.
+
+Use fictional details and safe, non-operational example URLs. Never encourage users to open malicious links or interact with real scam campaigns.
+
+Make the experience educational rather than entertaining at the expense of accuracy. Avoid childish styling, cartoonish security graphics, or unnecessary gamification.
+
+The existing scenarios and useful content must not be discarded simply because the interface or navigation is being improved.
+
+---
+
+## FEATURE 5 — HIGHLIGHT SUSPICIOUS TEXT IN SCREENSHOTS
+
+Improve the existing screenshot-analysis workflow so users can more easily see which parts of an image contributed to a warning.
+
+First inspect how the existing screenshot upload, OCR, Gemini Vision processing, and scan-result models work.
+
+### Required workflow
+
+1. Let the user select or capture a screenshot through the existing supported workflow.
+2. Extract readable text and perform the existing risk analysis.
+3. Identify suspicious phrases, URLs, requests, or indicators supported by the actual analysis.
+4. Present those indicators visually.
+5. Explain briefly why each highlighted part deserves attention.
+6. Preserve access to the original screenshot and complete scan result.
+
+### Highlighting behavior
+
+When actual text bounding boxes or reliable positional information are available, highlight the relevant text over the screenshot using a suitable overlay.
+
+Use a clear but restrained style, such as an amber outline for caution and a red outline for high-risk indicators. Ensure that colours are not the only way a user can distinguish the warning.
+
+If reliable coordinates are unavailable, do not invent screen positions or draw arbitrary boxes. Instead, show extracted text with the relevant phrases highlighted in an annotated text view or a clearly labelled list of evidence.
+
+Keep the original image unchanged. Do not silently overwrite the source screenshot.
+
+Allow users to inspect the reason behind each highlight. A phrase should only be highlighted as suspicious if the actual analysis supports that conclusion.
+
+### Privacy and failure handling
+
+Treat screenshots as potentially sensitive personal data.
+
+- Preserve the existing user-initiated scan workflow.
+- Explain when processing requires sending image content to Gemini or another remote service.
+- Do not upload images in the background without a clear user action.
+- Avoid logging screenshot contents or sensitive OCR text.
+- Do not retain additional copies of images unnecessarily.
+- Handle unreadable screenshots, unsupported formats, failed OCR, missing bounding boxes, and network errors gracefully.
+
+Do not replace the existing scanner or introduce a new vision architecture if the current one can be improved safely.
+
+---
+
+## FEATURE 6 — EXPORTABLE SCAN REPORTS
+
+Allow users to export or share an individual scan result in a professional, readable format.
+
+Inspect the existing result model and storage implementation before deciding how to build the report.
+
+### Preferred experience
+
+Provide an **Export Report** or **Share Report** action on the appropriate result screen, with access to the same report from scan history where practical.
+
+Prefer a clean PDF report if it can be implemented reliably using existing Android capabilities or an already available dependency. A readable text report should also be available as a fallback.
+
+Use Android's appropriate file-sharing mechanism, such as the system share sheet, and follow the project's current file-handling architecture.
+
+### Report content
+
+Include available fields such as:
+
+- AI ScamShield PK title and branding.
+- Scan date and time.
+- Content type, such as text, URL, or screenshot.
+- Risk score and severity classification.
+- Detected category, if available.
+- Reasons for flagging.
+- Evidence and suspicious indicators.
+- AI explanation, if successfully generated.
+- Recommended actions.
+- A brief safety disclaimer.
+- Footer: "Developed by Team Trident AI".
+
+Only include information actually present in the result. Do not invent missing evidence, risk details, verification timestamps, or sources.
+
+### Privacy by default
+
+Do not automatically expose the entire scanned message, screenshot, or URL in a shareable report without considering sensitivity.
+
+Provide a clear option to include or exclude the original submitted content. Where practical, provide a privacy-conscious default that includes the findings while omitting or masking potentially sensitive original content.
+
+Never include API keys, internal credentials, debug logs, hidden configuration, or unrelated scan history.
+
+Do not require broad storage permissions just to export a report. Use the appropriate system document picker, content URI, or FileProvider approach supported by the existing project.
+
+Ensure generated files can be opened and shared, and handle cancellation, duplicate filenames, export failures, and missing fields gracefully.
+
+---
+
+# 4. EXISTING FUNCTIONALITY THAT MUST BE PRESERVED
+
+Inspect and preserve the following capabilities wherever they already exist:
+
+### Text and message scanning
+
+Maintain support for analysing suspicious text and messages, including the existing English, Urdu, and Roman Urdu preprocessing where implemented.
+
+Preserve the current analysis pipeline and avoid replacing meaningful detection logic with a generic Gemini-only prompt.
+
+### URL risk analysis
+
+Preserve the existing URL analysis functionality, including its currently implemented structural and heuristic indicators.
+
+Do not silently replace the existing URL analyzer, alter its thresholds, or claim that heuristic analysis is machine-learning-based if the implementation does not use a trained model.
+
+Keep its findings connected to the result screen and any report or assistant explanation.
+
+### Screenshot analysis
+
+Preserve the existing screenshot upload, OCR, and image-analysis functionality while implementing the screenshot highlighting improvements described above.
+
+### Risk assessment and explainability
+
+Preserve the existing risk score, severity tiers, category, reasons for flagging, AI explanation, recommended action, and technical details wherever available.
+
+Ensure that any new assistant, translation, report, or insights functionality uses the same underlying result data consistently.
+
+Never let a translation or assistant response silently overwrite the original detector assessment.
+
+### Local scan history
+
+Preserve Room database functionality and existing history navigation.
+
+Improve the readability of history entries so users can understand what they scanned and what the result means without opening every record.
+
+Display a concise, accurate summary when available, including content type, severity, category, and date.
+
+Handle long text with sensible truncation and a detail view. Keep sensitive data appropriately protected.
+
+Do not create a second history database if the existing one is suitable.
+
+### Voice threat summary
+
+Preserve the existing text-to-speech functionality.
+
+The voice threat summary should speak a concise, readable **English summary by default**, including the risk assessment, the most important reason, and the recommended action.
+
+The spoken summary must reflect the current scan result rather than inventing details. Handle unavailable English TTS voices and speech errors gracefully.
+
+Stop playback when appropriate, such as when leaving the result screen or starting a different scan, and prevent overlapping speech.
+
+### Sound effects
+
+Preserve the existing scan-start and result sound effects, including the settings toggle.
+
+Keep the sounds subtle and professional. Do not introduce loud, playful, alarming, or music-like effects.
+
+Respect the user's mute preference. Do not play unexpected audio or make repeated sound effects distracting.
+
+### Themes and settings
+
+Preserve the existing theme options, AI configuration settings, language behavior, and other working preferences.
+
+New settings should integrate naturally into the existing settings screen. Do not duplicate settings or make previously stored preferences stop working.
+
+### FAQ and technical reference
+
+Preserve useful existing cybersecurity questions and answers, including content currently associated with any viva or academic reference screen.
+
+Where appropriate, present this material as **Security FAQ**, **Security Help**, or **Technical Reference**, and make it discoverable without giving it excessive prominence.
+
+Do not delete useful entries merely because their current titles or wording are academic.
+
+Avoid displaying public-facing wording such as "university project", "viva preparation", or "academic demo version" in ordinary user-facing product messaging.
+
+---
+
+# 5. DEVELOPER BRANDING
+
+Remove personal developer attribution from user-facing app content.
+
+Use only this developer attribution:
+
+**Developed by Team Trident AI**
+
+Apply it consistently where developer attribution currently appears, such as the home screen, settings, footer, and exported reports.
+
+Remove personal developer-profile dialogs, "About the Developer" cards, and personal names or academic details that were included solely as developer branding.
+
+Do not add a separate team biography, invented company description, fabricated certifications, invented team members, or unsupported claims about organizational status.
+
+The product name remains **AI ScamShield PK**.
+
+Keep branding understated and professional. The purpose is to present a general-purpose cybersecurity application, not to turn the interface into an advertisement for the development team.
+
+---
+
+# 6. GEMINI INTEGRATION AND OFFLINE FALLBACKS
+
+Continue using the existing Gemini integration for AI-based features wherever appropriate.
+
+Reuse the existing API service and configuration rather than building unnecessary parallel services.
+
+Gemini may support:
+
+- Scam Assistant conversations.
+- Plain-language explanations.
+- English, Urdu-script, and Roman Urdu explanations.
+- Screenshot understanding and OCR, subject to the existing implementation.
+- AI-generated safety recommendations grounded in detected evidence.
+
+Keep ordinary local operations local wherever possible, particularly scan history, basic insights, stored results, and the existing offline detection fallback.
+
+### Required behavior
+
+- Show loading states during network operations.
+- Handle network disconnection, timeouts, quota limits, authentication failures, malformed responses, empty responses, and API errors.
+- Avoid blocking the main thread.
+- Use appropriate coroutine and lifecycle practices consistent with the current codebase.
+- Prevent repeated taps from triggering unnecessary duplicate requests.
+- Avoid regenerating identical explanations unnecessarily when a suitable cached response already exists.
+- Keep local results available when Gemini is unavailable.
+
+When offline analysis is less capable than AI-powered analysis, clearly communicate that limitation. Never imply that an offline fallback has performed an unavailable AI or vision analysis.
+
+Do not hard-code a Gemini API key or commit secrets. Inspect how the existing key is configured and avoid weakening the current security posture.
+
+If the existing Android client contains a bundled API key, recognize that a key shipped inside a client application cannot be treated as fully secret. Do not falsely claim that simple obfuscation makes it secure. Do not introduce a large backend migration without necessity; document the existing exposure risk and any required configuration change.
+
+Do not send the full scan history or unrelated personal data to Gemini for convenience. Send only the contextual information required for the user-requested operation. Make remote processing understandable to the user where sensitive content is involved.
+
+---
+
+# 7. SECURITY AND TRUSTWORTHINESS REQUIREMENTS
+
+Security is central to ScamShield PK. Improvements must not make the application less trustworthy.
+
+- Do not request passwords, PINs, OTPs, banking credentials, or authentication tokens.
+- Do not advise users to open suspicious links or call unverified numbers displayed in suspicious messages.
+- Do not claim that content is guaranteed safe based on a low score.
+- Do not represent the AI explanation as verified forensic proof.
+- Do not fabricate official Pakistani helplines, regulator policies, reporting procedures, or emergency contacts.
+- If official contact information is displayed, ensure it is verified against a reliable source or clearly mark it as requiring verification.
+- Do not expose API keys, personal data, or submitted content in logs.
+- Preserve input validation and safe error handling.
+- Avoid insecure temporary files and publicly accessible exported reports.
+- Keep permissions limited to what the existing features genuinely require.
+- Avoid unnecessary network requests and unexpected uploads.
+- Do not silently collect analytics or transmit local history.
+- Clearly distinguish sample trainer scenarios from real scan results.
+
+The user should remain in control of submitting content for remote AI analysis and sharing scan reports.
+
+---
+
+# 8. UI/UX POLISH
+
+After implementing the requested features, perform a coherent UI/UX refinement across the existing application.
+
+Retain the established ScamShield PK visual identity, particularly its dark navy and electric-blue direction where already used. Do not arbitrarily replace a working theme or redesign every screen from scratch.
+
+### Visual improvements
+
+- Use consistent spacing, typography, icon sizes, card layouts, and corner radii.
+- Maintain strong contrast and readable text.
+- Improve screen hierarchy so risk level, reason, and recommended action are easy to find.
+- Use meaningful status colours without relying on colour alone.
+- Make buttons and touch targets comfortable for mobile use.
+- Improve long-text wrapping and scrolling.
+- Support loading, empty, success, error, and offline states.
+- Add subtle animations only when they communicate progress or state changes.
+- Avoid overcrowded dashboards and redundant cards.
+- Keep charts and insights readable on smaller Android screens.
+- Handle Urdu right-to-left text as reliably as practical.
+- Preserve accessibility and useful system navigation behavior.
+- Ensure screens remain usable with larger font sizes where practical.
+
+### Result screen priority
+
+The scan result should immediately answer these questions:
+
+1. What is the risk assessment?
+2. Why was the content flagged?
+3. What should I do next?
+
+Keep technical details available, but do not allow them to overwhelm the primary result.
+
+Place secondary actions—such as asking the Scam Assistant, translating an explanation, viewing highlighted evidence, listening to a voice summary, and exporting a report—where they are easy to discover without making the result screen cluttered.
+
+### Navigation
+
+Integrate the new features into the current navigation structure.
+
+Prefer enriching existing screens over adding unnecessary top-level destinations. Avoid duplicate navigation items and conflicting back-stack behavior.
+
+Do not change the app's entry point, package identity, application ID, signing configuration, or build architecture unnecessarily.
+
+---
+
+# 9. DATABASE AND ARCHITECTURE REQUIREMENTS
+
+Before changing data models or persistence:
+
+1. Inspect the existing Room database, entities, DAOs, migrations, and repository patterns.
+2. Determine which requested data is already stored.
+3. Reuse suitable existing fields and methods.
+4. Add new schema fields or entities only when genuinely necessary.
+5. Implement required migrations safely.
+6. Preserve existing history when upgrading the database.
+7. Avoid destructive migration strategies that erase user data.
+8. Handle older records or missing values gracefully.
+9. Keep UI state and long-running analysis work in the appropriate architecture layers.
+10. Reuse existing dependency injection or service creation patterns, if present.
+
+Do not perform lengthy AI work on the main thread. Follow established coroutine, lifecycle, and state-management conventions in the existing project.
+
+Do not create unnecessary abstractions solely to make the code appear more complex.
+
+---
+
+# 10. PERFORMANCE AND DEVICE COMPATIBILITY
+
+Make the application stable on ordinary Android devices, including devices with limited memory or unreliable internet connectivity.
+
+- Avoid unnecessarily large dependencies.
+- Avoid duplicating large images, screenshot files, or generated documents in memory.
+- Release or stop media and speech resources appropriately.
+- Avoid repeated database queries or API calls caused by UI recomposition.
+- Ensure coroutine jobs are cancelled or scoped correctly when screens are closed.
+- Keep scrolling smooth and screen rendering responsive.
+- Handle configuration changes and lifecycle transitions safely.
+- Respect the project's existing minimum SDK and target SDK unless a change is truly necessary.
+- Do not add permissions simply because a new library recommends them.
+- Verify new dependencies are compatible with the current Gradle and Kotlin configuration before adding them.
+
+Do not attempt a broad dependency upgrade as part of this feature implementation unless a specific compatibility or security problem requires it.
+
+---
+
+# 11. IMPLEMENTATION WORKFLOW
+
+Follow this workflow in the current project.
+
+## Phase 1 — Inspect and plan
+
+Inspect the actual repository, project instructions, source files, current screen navigation, service layer, Gradle configuration, and tests.
+
+Identify:
+
+- What already works.
+- Where each requested feature should integrate.
+- Which functions or files can be reused.
+- Any existing defects directly affecting these changes.
+- The smallest set of source files that must change.
+- Any feature that requires additional dependencies, permissions, database migration, or configuration.
+
+Do not immediately rewrite code. First establish the current implementation.
+
+Then begin making the changes; do not stop at a plan.
+
+## Phase 2 — Implement in sensible groups
+
+Implement the features in coherent groups:
+
+**Group A — Core experience**
+- Branding cleanup.
+- Result and history readability.
+- English voice-summary reliability.
+- Consistent loading, empty, error, and offline states.
+
+**Group B — AI assistance and languages**
+- Contextual Scam Assistant.
+- English, Urdu-script, and Roman Urdu explanations.
+- Evidence-grounded answers and appropriate fallback behavior.
+
+**Group C — Personal insights and awareness**
+- Insights computed from actual local history.
+- Improved interactive Scam Awareness Trainer.
+- Accurate empty states and local progress handling, where implemented.
+
+**Group D — Screenshot evidence and reporting**
+- Reliable suspicious-text highlighting.
+- Exportable scan reports.
+- User-controlled sharing and privacy-conscious defaults.
+
+**Group E — Final integration and polish**
+- Navigation checks.
+- UI/UX consistency.
+- Performance and lifecycle checks.
+- Regression testing and final build verification.
+
+This grouping is a guide, not a requirement to create unnecessary new architecture. Reuse existing functionality wherever possible.
+
+## Phase 3 — Verify each group
+
+After each meaningful group, check for:
+
+- Compilation errors.
+- Missing imports and unresolved references.
+- Kotlin type errors.
+- Compose rendering problems.
+- Coroutine and lifecycle problems.
+- Broken navigation.
+- API response and error-handling problems.
+- Room schema or migration errors.
+- Regression of previously working features.
+
+Fix errors before proceeding where practical.
+
+Do not leave core functions as TODOs, fake implementations, hardcoded sample results, or buttons that look functional but do nothing.
+
+## Phase 4 — Final verification
+
+Run the most relevant available checks, including:
+
+- Existing unit and instrumentation tests where available.
+- Kotlin compilation.
+- Android debug build.
+- Database and migration verification where applicable.
+- Navigation and UI integration checks.
+- Validation of report generation and sharing.
+- Validation of Gemini failure handling and offline fallback behavior.
+- Regression checks for existing scanning, history, voice, sound, settings, and themes.
+
+Use the actual Gradle tasks supported by the project's configuration.
+
+If an emulator or device is available, test the most important user flows. If it is not available, perform the best available build and static checks and state what could not be tested.
+
+Do not claim that the app was physically tested on an Android device if it was only compiled.
+
+If a build fails, inspect and fix the actual error rather than merely reporting it.
+
+---
+
+# 12. ACCEPTANCE CHECKLIST
+
+Before considering the task complete, verify every applicable item below.
+
+### Existing functionality
+- [ ] Existing text and message scanning still works.
+- [ ] Existing URL analysis remains intact.
+- [ ] Existing screenshot analysis remains available.
+- [ ] Risk scores, severity tiers, evidence, and recommended actions remain connected.
+- [ ] Room-backed scan history still works.
+- [ ] History summaries are easier to understand.
+- [ ] Voice threat summaries remain functional and speak English by default.
+- [ ] Sound effects and their settings toggle still work.
+- [ ] Existing themes and preferences remain functional.
+- [ ] Useful security FAQ and reference content is retained.
+
+### Requested features
+- [ ] Context-aware AI Scam Assistant.
+- [ ] English, Urdu-script, and Roman Urdu explanations.
+- [ ] Personal Scam Insights calculated from genuine local history.
+- [ ] Interactive Scam Awareness Trainer.
+- [ ] Evidence-grounded screenshot text highlighting.
+- [ ] Exportable scan reports with a working share/export flow.
+
+### Branding and design
+- [ ] Personal developer attribution has been removed from public-facing app content.
+- [ ] The only developer attribution is "Developed by Team Trident AI".
+- [ ] The app does not present itself as an academic assignment.
+- [ ] The interface remains consistent with ScamShield PK branding.
+- [ ] New features integrate naturally into existing screens and navigation.
+
+### Security and reliability
+- [ ] No API keys or secrets have been hard-coded or exposed in logs.
+- [ ] Sensitive scan content is not sent remotely without a user-initiated operation and appropriate disclosure.
+- [ ] Gemini failures and offline states are handled honestly.
+- [ ] No false detection results or fabricated insight statistics are introduced.
+- [ ] Exported reports do not unintentionally expose sensitive information.
+- [ ] Database changes preserve existing user history.
+- [ ] Existing functionality has not been removed to make new features easier.
+
+### Verification
+- [ ] Relevant build and tests have been run.
+- [ ] Compilation problems introduced by these changes have been fixed.
+- [ ] Important user flows have been tested where the environment permits.
+- [ ] Remaining limitations are documented honestly.
+
+---
+
+# 13. FINAL RESPONSE AFTER IMPLEMENTATION
+
+When you finish, provide a concise but informative implementation report containing:
+
+1. **Features implemented:** A summary of what now works.
+2. **Files changed:** Actual file paths and a brief description of each significant change.
+3. **Database or dependency changes:** State whether any were needed and why.
+4. **Verification results:** Exact builds or tests performed and their real results.
+5. **Anything incomplete:** Clearly identify any feature that remains partial, blocked, or untested.
+6. **Required configuration:** Mention any user action that is genuinely necessary, such as supplying a valid Gemini configuration.
+
+Do not claim that all six features are complete if some remain placeholders or have not been integrated.
+
+Do not finish with a list of features that you merely recommend. Implement them in the existing project and then report the actual result.
+
+---
+
+# FINAL DIRECTIVE
+
+**Start by inspecting the existing AI ScamShield PK Android project. Then make the smallest reliable set of changes needed to integrate all six requested feature areas, preserve existing functionality, improve privacy and security, apply consistent UI/UX polish, and verify the final build.**
+
+Be thorough, practical, and conservative with working code. A stable, integrated, trustworthy application is more important than a large amount of unnecessary new code.

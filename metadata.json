@@ -1,0 +1,7 @@
+{
+  "name": "AI ScamShield PK",
+  "description": "Multilingual and multimodal AI-powered scam risk assessment and digital safety application for Pakistan.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
