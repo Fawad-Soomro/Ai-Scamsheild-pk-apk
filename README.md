@@ -1,242 +1,211 @@
+<div align="center">
 
 # AI ScamShield PK
 
-**An AI-assisted digital safety app for identifying potential scams and phishing threats.**
+### AI-Powered Scam & Phishing Risk Assessment for Pakistan
 
-<p align="center">
-  <strong>Developed by Team Trident AI</strong>
-</p>
+**Denning Institute of Technology and Entrepreneurship (DITE), Hyderabad**  
+**DITE Hackathon 2026–27 · Organised by TECHGEN**
 
-AI ScamShield PK is an Android application designed to help people in Pakistan assess suspicious messages, URLs, and screenshots. It combines Gemini-powered analysis with local URL-risk checks and offline fallback logic to present a risk level, supporting indicators, explanations, and recommended next steps.
-
-> **Important:** ScamShield PK provides risk assessments, not guarantees. A low-risk result does not prove that content is safe, and a warning does not independently prove criminal intent. Always verify important requests through an organisation's official channels.
+</div>
 
 ---
 
-## About Team Trident AI
+## 1. Project and Team
 
-We are **Team Trident AI**, a three-member team working on practical AI-powered software to address real-world digital safety challenges. For this project, we combined Android development, AI integration, cybersecurity-focused analysis, and product testing to build an accessible scam-awareness tool.
+**Project name:** AI ScamShield PK  
+**Team name:** Team Trident AI  
+**Institution:** Denning Institute of Technology and Entrepreneurship (DITE), Hyderabad  
+**Event:** DITE Hackathon 2026–27, organised by TECHGEN
 
----
+### Team members
 
-## Key features
+- **Mirzadi Balouch** — Team Leader
+- **Fawad Ali Soomro**
+- **Mehran Ali Memon**
 
-### 1. Message and text analysis
-- Analyse submitted messages for potential scam and phishing indicators.
-- Designed to handle English, Urdu, Roman Urdu, and mixed-language content through the existing analysis workflow.
-- Present a risk score, severity level, possible category, evidence, explanation, and recommended action when available.
+We are Team Trident AI, a three-member team focused on building a practical AI-powered digital-safety tool. AI ScamShield PK is our effort to make scam-awareness and suspicious-content assessment easier to access and understand for people in Pakistan.
 
-### 2. URL risk assessment
-- Analyse URLs for structural warning signs, including insecure HTTP, raw IP-address hosts, punycode, URL shorteners, suspicious top-level domains, excessive subdomain depth, and possible impersonation of Pakistani services.
-- Combine local heuristic indicators with Gemini analysis when the API is configured and available.
-- Use a local fallback when Gemini cannot be called.
+## 2. Theme and Problem Statement
 
-**Note:** The URL checks in this project include heuristic rules. Do not interpret them as a guarantee of safety or as proof that a URL belongs to a criminal.
+**Project theme:** AI-powered cybersecurity, digital safety, and scam awareness. If the hackathon provided an exact official theme title, replace this wording with that title.
 
-### 3. Screenshot analysis and evidence
-- Submit a screenshot for multimodal analysis and text extraction through the existing Gemini-based workflow.
-- Review extracted text and interactive evidence indicators that explain why particular phrases may be suspicious.
-- Results depend on image readability, available AI services, and the evidence returned by the analysis.
+People can receive fraudulent messages, impersonation attempts, suspicious URLs, and misleading screenshots through SMS, messaging apps, and social platforms. AI ScamShield PK helps users assess this content by presenting a risk level, explaining available warning signs, and recommending safer next steps in accessible language.
 
-### 4. Contextual AI Scam Assistant
-- Ask follow-up questions about a scan result.
-- Get simpler explanations of warning signs and suggested next steps.
-- Use quick prompts to explore why content was flagged or how to verify a request.
-- Use local fallback guidance when the AI service is unavailable, where supported.
+## 3. What We Built
 
-### 5. Multilingual explanations
-- Choose **English**, **Urdu script**, or **Roman Urdu** for the explanation.
-- Make scan findings easier to understand without changing the underlying risk assessment.
+AI ScamShield PK is an Android application that helps users assess potentially suspicious content. It combines Gemini-powered analysis with local URL-risk heuristics and fallback logic where supported. The app is designed to explain *why* content may be suspicious rather than showing only a score.
 
-### 6. Personal Scam Insights
-- View scan totals and risk-level summaries based on locally stored scan history.
-- Review recent activity, detected indicators, categories, and input types where data is available.
-- See personal patterns from the scans recorded on the device; these are not nationwide scam statistics.
+### Key features
 
-### 7. Scam Awareness Trainer
-- Practise identifying suspicious and legitimate-looking messages through sample scenarios.
-- Review warning signs and explanations after making a choice.
-- Scenarios are simulations for awareness and education, not live threat detections.
+- **Text and message analysis:** Assess submitted messages for potential scam and phishing indicators.
+- **URL risk assessment:** Check URLs for structural warning signs, including IP-based hosts, punycode, suspicious subdomain patterns, URL shorteners, and possible impersonation.
+- **Screenshot analysis:** Submit screenshots for AI-assisted image analysis and review available extracted text and evidence.
+- **AI Scam Assistant:** Ask follow-up questions about a scan result and get help understanding warning signs.
+- **Multilingual explanations:** Request explanations in English, Urdu script, or Roman Urdu.
+- **Personal Scam Insights:** Review scan history, risk summaries, and activity derived from locally stored scan records.
+- **Scam Awareness Trainer:** Practise evaluating simulated scam and legitimate-looking scenarios.
+- **Scan history:** Revisit previous assessments stored locally using Room.
+- **Exportable reports:** Generate a PDF report and share a text summary where supported.
+- **Voice summary and sound feedback:** Listen to a concise English result summary and receive scan-status sounds.
+- **Security FAQ and settings:** Access safety guidance and available preferences.
 
-### 8. Scan history
-- Store and revisit scan records using the app's local Room database.
-- Review previous assessments and their available summaries.
+> **Important:** The app provides risk assessments, not guarantees. A low-risk result does not prove content is safe, and a warning alone does not prove criminal intent. Verify important requests through official channels.
 
-### 9. Exportable scan reports
-- Generate a PDF report for a scan and share a text summary where supported.
-- Choose whether the original submitted content should be included in the report.
-- Review the report before sharing it, especially if it contains personal information, phone numbers, or URLs.
+## 4. How AI Is Used
 
-### 10. Voice summary and sound feedback
-- Listen to a concise English summary of a result using Android text-to-speech.
-- Receive short scan-status sound effects, with sound behavior controlled by the app's settings where available.
+### AI model / API
 
-### 11. Security help and settings
-- Access security FAQs and safety guidance.
-- Configure available app preferences and theme options.
+The app calls the **Google Gemini API** using the Gemini model identifier configured in the current source code (`gemini-3.5-flash`). Model availability and API access depend on Google's current supported models, account configuration, and API limits; verify the model ID if a request fails.
 
----
+The Android project sends requests to Google's Generative Language API through **Retrofit and OkHttp**. Local heuristic analysis is also present for supported fallback workflows. The local URL analyzer uses rules and structural indicators; it should not be described as a trained machine-learning URL classifier.
 
-## Technology stack
+### Inputs and outputs
+
+| Input | AI / analysis process | Output |
+|---|---|---|
+| Text or message | Gemini analysis when configured; local fallback where supported | Risk score/severity, possible category, supporting indicators, explanation, and recommended action when available |
+| URL | Local URL-structure heuristics and Gemini analysis when available | URL warning indicators and a risk assessment |
+| Screenshot | Gemini multimodal image analysis when available | Image-based assessment, explanation, and extracted evidence when returned by the service |
+| Follow-up question | User question plus relevant scan context | Contextual explanation or safety guidance |
+| Scan history | Local database calculations, not necessarily a Gemini request | Personal activity and risk summaries |
+
+**Fallback behavior:** When the Gemini service is unavailable or not configured, supported local analysis may still provide limited results. Local fallback is not equivalent to full Gemini-powered analysis, especially for image understanding or contextual explanations.
+
+**Responsible use:** AI output may be incomplete or incorrect. The app should not be treated as a substitute for official security advice or independent verification.
+
+## 5. Technology Stack
 
 | Area | Technology |
 |---|---|
 | Platform | Android |
-| Language | Kotlin |
-| UI | Jetpack Compose, Material 3 |
+| Programming language | Kotlin |
+| UI framework | Jetpack Compose |
+| Design components | Material 3 |
 | Navigation | Navigation Compose |
-| AI analysis | Gemini API integration |
-| Networking | Retrofit and OkHttp |
-| Local persistence | Room database |
-| Asynchronous work | Kotlin Coroutines |
-| PDF export | Android `PdfDocument` and `FileProvider` |
-| Voice output | Android TextToSpeech |
+| AI service | Google Gemini API |
+| Networking | Retrofit, OkHttp |
+| JSON parsing | Moshi |
+| Local database | Room |
+| Asynchronous processing | Kotlin Coroutines |
+| PDF generation | Android `PdfDocument` |
+| File sharing | Android `FileProvider` |
+| Text-to-speech | Android TextToSpeech |
 | Sound feedback | Android ToneGenerator |
 | Build system | Gradle with Kotlin DSL |
 
-The app's Android configuration in this repository uses **minimum SDK 24**. The configured application ID is `com.aistudio.scamshield.pkzq`; the Gradle namespace is `com.example`.
-
----
-
-## Project structure
-
-```text
-app/src/main/java/com/example/
-├── data/
-│   ├── local/          # Room database and scan DAO
-│   ├── model/          # Scan results, records, indicators, URL features
-│   ├── remote/         # Gemini request/response and API service
-│   └── repository/     # Analysis, API calls, parsing, and fallbacks
-├── engine/
-│   ├── UrlRiskAnalyzer.kt
-│   ├── TextPreprocessor.kt
-│   ├── DemoDataProvider.kt
-│   ├── PdfReportGenerator.kt
-│   ├── TtsManager.kt
-│   └── SoundEffectManager.kt
-├── ui/
-│   ├── components/     # Shared UI components
-│   ├── navigation/     # App navigation routes
-│   ├── screens/        # Home, scanner, results, history, insights, etc.
-│   ├── theme/          # Theme and colours
-│   └── viewmodel/      # UI state and app actions
-└── AndroidManifest.xml
-```
-
-*This is a high-level guide to the source layout; individual files may evolve as the project changes.*
-
----
-
-## Getting started
+## 6. Run the Project Locally
 
 ### Requirements
 
-- Android Studio compatible with the project's Gradle and Android Gradle Plugin versions.
-- A compatible JDK as required by the Gradle configuration.
-- Android SDK components required by the project.
-- A Gemini API key for remote AI features.
-- An Android emulator or physical Android device for running the app.
+- Android Studio
+- A compatible JDK and Android SDK for the project's Gradle configuration
+- An Android emulator or physical Android device
+- A Google Gemini API key for Gemini-powered features
 
-### 1. Clone or download the repository
+### Steps
 
-```bash
-git clone <YOUR_REPOSITORY_URL>
-cd <YOUR_PROJECT_DIRECTORY>
-```
+1. **Download or clone the repository.**
 
-Alternatively, download the ZIP and extract the project.
+   ```bash
+   git clone https://github.com/Fawad-Soomro/Ai-Scamsheild-pk-apk
+   cd Ai-Scamsheild-pk-apk
+   ```
 
-### 2. Open the project
+   Alternatively, download and extract the project ZIP.
 
-1. Open Android Studio.
-2. Choose **Open** and select the project root containing `settings.gradle.kts`.
-3. Allow Gradle sync to finish and install any required Android SDK components.
+2. **Open the project in Android Studio.**
 
-### 3. Configure the Gemini API key
+   Open the folder containing `settings.gradle.kts` and allow Gradle sync to finish.
 
-The project includes `.env.example` and uses the Secrets Gradle Plugin configuration. Create a local `.env` file in the project root, following the example:
+3. **Configure the Gemini API key.**
 
-```dotenv
-GEMINI_API_KEY=YOUR_GEMINI_API_KEY
-```
+   The project includes an `.env.example` file. Create a local `.env` file in the project root and follow its format:
 
-Use a valid key from Google's official AI developer platform and follow its current terms and usage limits. Keep `.env` private: **do not commit your real API key to Git or paste it into public issues, screenshots, or documentation.** The repository's `.gitignore` excludes `.env`.
+   ```dotenv
+   GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+   ```
 
-If the key is absent or invalid, the app may use local fallback analysis for supported workflows, but Gemini-dependent explanations and screenshot analysis may be limited or unavailable.
+   Obtain a key through Google's official AI developer platform. Keep your real key private and **never commit `.env` or publish your key**. The repository's setup and Secrets Gradle Plugin configuration should be checked against the current project before building.
 
-### 4. Build and run
+4. **Run the application.**
 
-Use Android Studio's **Run** action to build and launch the app on an emulator or connected device.
+   Select an emulator or connect an Android device with USB debugging enabled, then press **Run** in Android Studio.
 
-You can also run Gradle tasks from a terminal in the project root if the Gradle wrapper is present in your copy:
+5. **Optional: build from a terminal.**
 
-```bash
-./gradlew assembleDebug
-./gradlew test
-```
+   If the Gradle wrapper is present in your local checkout:
 
-On Windows Command Prompt, use `gradlew.bat` instead of `./gradlew`. If the wrapper files are not included in the downloaded project, open it in Android Studio or install/configure the appropriate Gradle version before running these commands.
+   **Windows Command Prompt:**
+   ```bat
+   gradlew.bat assembleDebug
+   gradlew.bat test
+   ```
 
-**Signing note:** Review the signing configuration in `app/build.gradle.kts` before preparing a release build. Never publish a release using development credentials or commit signing keys and passwords to the repository. Configure release signing securely using your own credentials and local environment variables.
+   **macOS/Linux:**
+   ```bash
+   ./gradlew assembleDebug
+   ./gradlew test
+   ```
+
+   The debug APK is normally generated under `app/build/outputs/apk/debug/` after a successful debug build.
+
+> If the Gemini model identifier, API key setup, or Gradle configuration produces an error, check the exact error message and Google's current API documentation rather than assuming the remote AI service is available.
+
+## 7. Project Links
+
+- **GitHub repository:** `https://github.com/Fawad-Soomro/Ai-Scamsheild-pk-apk`
+- **Demo video (Google Drive):** `https://drive.google.com/file/d/1rgPdG09jCsr8KiY8PAu9M8TAoHdCR57X/view?usp=sharing`
+- **Apk file (Google Drive):** `https://drive.google.com/file/d/1RhojBVn3jdCCV7eV0EKl4SnzfPThkDvg/view?usp=sharing`
+
+
+For this Android application, an APK or GitHub Releases link is appropriate if a public web deployment is not available. Make sure the link is accessible to the judges and does not require them to request permission.
+
+## 8. Screenshots
+
+Screenshots help judges quickly understand the application. Add two clear screenshots, such as the **Home screen** and a **Scan Result screen**.
+
+
+### Home Screen
+
+![AI ScamShield PK Home Screen](./home-screen.png)
+
+### Scan Result
+
+![AI ScamShield PK Scan Result](./scan-result.png)
+
+## 9. Datasets, Models, and Credits
+
+- **Google Gemini API:** Used for remote AI-powered text, URL, screenshot, and contextual analysis where configured. Credit: Google. See the [Google AI for Developers documentation](https://ai.google.dev/gemini-api/docs).
+- **Local URL analysis:** The supplied Android project contains a heuristic URL analyzer (`UrlRiskAnalyzer.kt`) that evaluates structural warning signs. This is project code, not a separately credited pre-trained URL-classification model.
+- **Local history:** Room is used for on-device scan records and history-based insights.
+- **Datasets / pre-trained model files:** No standalone external dataset or bundled pre-trained ML model file was identified in the supplied Android project ZIP.
+- **Android libraries:** Kotlin, Jetpack Compose, Material 3, AndroidX, Room, Retrofit, OkHttp, Moshi, and related dependencies are declared in the project build configuration. Their authors and licences remain with their respective projects.
+
+If the team used any additional dataset, open-source repository, icon pack, model, or other resource outside this ZIP, add its name, author/organisation, source URL, and applicable licence here.
+
+## 10. Privacy, Security, and Limitations
+
+- Gemini-powered features may send the content needed for the requested analysis to Google's API. Do not submit sensitive content unless you understand and accept that processing.
+- Keep API keys and signing credentials out of source control.
+- Review exported reports before sharing; they may contain sensitive scan details.
+- Local fallback analysis has limitations and does not replace full AI analysis.
+- False positives and false negatives are possible.
+- The trainer uses simulated examples and is not a live threat feed.
+- Risk scores are estimates, not guarantees of safety or maliciousness.
+
+Before public distribution, verify the API-key handling, privacy disclosures, report-sharing behavior, model availability, and current platform requirements.
+
+## 11. Acknowledgements
+
+We thank **Denning Institute of Technology and Entrepreneurship (DITE), Hyderabad**, and **TECHGEN** for organising the **DITE Hackathon 2026–27** and providing an opportunity to develop and present a practical technology solution.
 
 ---
 
-## Privacy and security considerations
+<div align="center">
 
-- Scan history is stored locally using the app's Room database.
-- Gemini-powered analysis requires submitting the relevant content to the configured AI service. Do not submit messages, screenshots, or URLs containing sensitive information unless you are comfortable with that processing.
-- Review any report before sharing it, and omit the original content when it is not necessary.
-- Never share OTPs, passwords, PINs, recovery codes, or banking credentials with anyone—including in a scan prompt.
-- Treat every risk score as an estimate based on available indicators, not a guarantee.
-- Keep API keys and release-signing credentials out of source control.
+**AI ScamShield PK**  
+Built with care by **Team Trident AI**  
+*Think before you click. Verify before you trust.*
 
-Before a public release, review API-key exposure, privacy disclosures, data handling, current Google Play requirements, accessibility, and real-device behavior. A successful local build alone does not establish production readiness or Google Play compliance.
-
----
-
-## Limitations
-
-- Detection can produce false positives and false negatives.
-- AI-generated explanations may be incomplete or incorrect; compare them with the actual evidence.
-- Local fallback analysis is not equivalent to full Gemini-powered multimodal analysis.
-- Screenshot results depend on image quality and available processing services.
-- The awareness trainer uses sample scenarios and should not be treated as a live threat feed.
-- The app does not replace official advice from a bank, payment provider, telecom operator, or cybercrime authority.
-
----
-
-## Roadmap
-
-Potential future improvements include:
-
-- Broader evaluation using labelled legitimate and malicious examples.
-- Documented false-positive and false-negative testing.
-- Stronger test coverage for URL analysis, translation, offline behavior, and report generation.
-- More robust language-quality evaluation for Urdu and Roman Urdu.
-- Further privacy and security review before public distribution.
-
----
-
-## Contributing
-
-Contributions, bug reports, and practical suggestions are welcome. Before submitting a change:
-
-1. Explain the issue or proposed improvement.
-2. Keep changes focused and avoid committing secrets or private scan data.
-3. Run the relevant build and tests.
-4. Document any new configuration requirements.
-
-If this is a team or academic repository, follow your team's contribution and attribution requirements.
-
----
-
-## Disclaimer
-
-AI ScamShield PK is an informational digital-safety tool. It cannot guarantee that a message, URL, image, or transaction is safe or fraudulent. Verify sensitive requests through independently obtained official contact details, and never rely solely on an app's risk score when making financial or security decisions.
-
----
-
-<p align="center">
-  <strong>AI ScamShield PK</strong><br />
-  Built with care by <strong>Team Trident AI</strong>
-</p>
+</div>
