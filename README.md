@@ -17,18 +17,6 @@ AI ScamShield PK is an Android application designed to help people in Pakistan a
 
 We are **Team Trident AI**, a three-member team working on practical AI-powered software to address real-world digital safety challenges. For this project, we combined Android development, AI integration, cybersecurity-focused analysis, and product testing to build an accessible scam-awareness tool.
 
-### Team members and roles
-
-Replace the placeholders below with your team members' actual names before publishing the repository.
-
-| Team member | Project role | Main responsibilities |
-|---|---|---|
-| **[Member 1 Name]** | **Project Lead & Android UI/UX Developer** | Coordinates project work; develops and refines the Jetpack Compose interface, navigation, and user experience. |
-| **[Member 2 Name]** | **AI Integration & Detection Engineer** | Works on Gemini integration, text analysis, URL-risk indicators, result explanations, and offline fallback behavior. |
-| **[Member 3 Name]** | **Quality Assurance & Documentation Engineer** | Tests user flows and edge cases, reviews risk explanations and report output, and maintains project documentation and presentation material. |
-
-*These are suggested role assignments. Adjust them to reflect the work each member actually contributed.*
-
 ---
 
 ## Key features
